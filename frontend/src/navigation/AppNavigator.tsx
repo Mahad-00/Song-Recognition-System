@@ -45,6 +45,8 @@ export default function AppNavigator() {
         />
       );
     case 'signup':
+      return <SignUpScreen onSignIn={() => navigate('login')} />;
+    case 'signup':
       return (
         <SignUpScreen
           onSignIn={(name) => {

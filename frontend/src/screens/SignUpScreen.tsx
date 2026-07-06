@@ -18,7 +18,7 @@ import GoogleSignInButton from '../components/GoogleSignInButton';
 import { API_BASE_URL } from '../config/api';
 
 interface Props {
-  onSignIn?: (name: string) => void;
+  onSignIn?: () => void;
 }
 
 export default function SignUpScreen({ onSignIn }: Props) {
@@ -129,7 +129,7 @@ export default function SignUpScreen({ onSignIn }: Props) {
 
       if (res.ok) {
         setSuccessMsg('Account created successfully!');
-        setTimeout(() => onSignIn?.(fullName.trim()), 1500);
+        setTimeout(() => onSignIn?.(), 1500);
       } else {
         setErrorMsg(data.detail || 'Something went wrong');
       }

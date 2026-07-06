@@ -52,7 +52,7 @@ export default function HomeScreen({ fullName }: Props) {
         contentContainerStyle={{ paddingBottom: 120 }}
       >
         {/* Header */}
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20, height: 64 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20, height: 64, marginTop: 28 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
             <Image
               source={require('../images/logo.png')}
@@ -139,8 +139,8 @@ export default function HomeScreen({ fullName }: Props) {
                 }}
               >
                 <Image
-                  source={require('../images/logo.png')}
-                  style={{ width: 80, height: 80 }}
+                  source={require('../images/mic.png')}
+                  style={{ width: 80, height: 80, tintColor: '#fff' }}
                   resizeMode="contain"
                 />
               </TouchableOpacity>
