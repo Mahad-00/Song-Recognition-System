@@ -54,11 +54,11 @@ export default function HomeScreen({ fullName, onListen, onNavigate }: Props) {
         contentContainerStyle={{ paddingBottom: 120 }}
       >
         {/* Header */}
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20, height: 64, marginTop: 0 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20, height: 64, marginTop: 12 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
             <Image
               source={require('../images/logo.png')}
-              style={{ width: 36, height: 36 }}
+              style={{ width: 40, height: 40 }}
               resizeMode="contain"
             />
             <Text style={{ fontSize: 20, lineHeight: 28, fontWeight: '700', color: colors.primary }}>EchoID</Text>
