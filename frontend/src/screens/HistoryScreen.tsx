@@ -53,7 +53,7 @@ export default function HistoryScreen({ onNavigate }: Props) {
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 120 }}>
         {/* Header */}
         <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, height: 64, marginTop: 24 }}>
-          <Image source={require('../images/logo.png')} style={{ width: 64, height: 64 }} resizeMode="contain" />
+          <Image source={require('../images/logo.png')} style={{ width: 32, height: 32 }} resizeMode="contain" />
         </View>
 
         <View style={{ paddingHorizontal: 20 }}>
