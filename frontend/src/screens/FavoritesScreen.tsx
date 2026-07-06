@@ -40,7 +40,7 @@ export default function FavoritesScreen({ onNavigate }: Props) {
           <TouchableOpacity onPress={() => onNavigate?.('home')} activeOpacity={0.7} style={{ marginRight: 8 }}>
             <MaterialIcons name="arrow-back" size={24} color={colors.primary} />
           </TouchableOpacity>
-          <Image source={require('../images/screen.png')} style={{ width: 48, height: 48 }} resizeMode="contain" />
+          <Image source={require('../images/screen.png')} style={{ width: 64, height: 64 }} resizeMode="contain" />
         </View>
 
         <View style={{ paddingHorizontal: 20 }}>
