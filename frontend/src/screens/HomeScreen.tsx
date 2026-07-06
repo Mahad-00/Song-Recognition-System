@@ -21,7 +21,7 @@ interface Props {
   onListen?: () => void;
 }
 
-export default function HomeScreen({ fullName }: Props) {
+export default function HomeScreen({ fullName, onListen }: Props) {
   const pulseAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
