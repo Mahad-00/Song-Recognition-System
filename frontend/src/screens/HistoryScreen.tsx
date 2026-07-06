@@ -52,8 +52,8 @@ export default function HistoryScreen({ onNavigate }: Props) {
       <StatusBar barStyle="dark-content" backgroundColor={colors.background} />
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 120 }}>
         {/* Header */}
-        <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, height: 64, marginTop: 12 }}>
-          <Image source={require('../images/screen.png')} style={{ width: 40, height: 40 }} resizeMode="contain" />
+        <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, height: 64, marginTop: 24 }}>
+          <Image source={require('../images/screen.png')} style={{ width: 48, height: 48 }} resizeMode="contain" />
         </View>
 
         <View style={{ paddingHorizontal: 20 }}>
