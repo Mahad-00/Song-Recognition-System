@@ -131,22 +131,30 @@ export default function FavoritesScreen({ onNavigate }: Props) {
       </ScrollView>
 
       {/* Bottom Nav */}
-      <View style={{ position: 'absolute', bottom: 24, left: 20, right: 20, maxWidth: 440, alignSelf: 'center', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', height: 56, backgroundColor: colors.surface + 'CC', borderWidth: 1, borderColor: colors.outlineVariant + '4D', borderRadius: 999, shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.08, shadowRadius: 16, elevation: 8 }}>
-        <TouchableOpacity onPress={() => onNavigate?.('home')} activeOpacity={0.7} style={{ alignItems: 'center', justifyContent: 'center', paddingHorizontal: 16, paddingVertical: 8 }}>
-          <MaterialIcons name="home" size={22} color={colors.onSurfaceVariant} />
-          <Text style={{ fontSize: 12, lineHeight: 16, fontWeight: '700', letterSpacing: 0.05, textTransform: 'uppercase', color: colors.onSurfaceVariant, marginTop: 2 }}>Home</Text>
+      <View style={{ position: 'absolute', bottom: 24, left: 20, right: 20, maxWidth: 440, alignSelf: 'center', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', height: 72, backgroundColor: colors.surfaceContainerLowest, borderWidth: 1, borderColor: colors.outlineVariant + '4D', borderRadius: 20, shadowColor: '#000', shadowOffset: { width: 0, height: 8 }, shadowOpacity: 0.06, shadowRadius: 24, elevation: 8 }}>
+        <TouchableOpacity onPress={() => onNavigate?.('home')} activeOpacity={0.6} style={{ alignItems: 'center', justifyContent: 'center', gap: 2, paddingVertical: 4 }}>
+          <View style={{ width: 44, height: 32, borderRadius: 10, alignItems: 'center', justifyContent: 'center' }}>
+            <MaterialIcons name="home" size={22} color={colors.onSurfaceVariant} />
+          </View>
+          <Text style={{ fontSize: 11, lineHeight: 14, fontWeight: '600', color: colors.onSurfaceVariant }}>Home</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => onNavigate?.('history')} activeOpacity={0.7} style={{ alignItems: 'center', justifyContent: 'center', paddingHorizontal: 16, paddingVertical: 8 }}>
-          <MaterialIcons name="history" size={22} color={colors.onSurfaceVariant} />
-          <Text style={{ fontSize: 12, lineHeight: 16, fontWeight: '700', letterSpacing: 0.05, textTransform: 'uppercase', color: colors.onSurfaceVariant, marginTop: 2 }}>History</Text>
+        <TouchableOpacity onPress={() => onNavigate?.('history')} activeOpacity={0.6} style={{ alignItems: 'center', justifyContent: 'center', gap: 2, paddingVertical: 4 }}>
+          <View style={{ width: 44, height: 32, borderRadius: 10, alignItems: 'center', justifyContent: 'center' }}>
+            <MaterialIcons name="history" size={22} color={colors.onSurfaceVariant} />
+          </View>
+          <Text style={{ fontSize: 11, lineHeight: 14, fontWeight: '600', color: colors.onSurfaceVariant }}>History</Text>
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.7} style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: colors.primaryContainer, borderRadius: 999, paddingHorizontal: 16, paddingVertical: 8 }}>
-          <MaterialIcons name="favorite" size={22} color={colors.onPrimaryContainer} />
-          <Text style={{ fontSize: 12, lineHeight: 16, fontWeight: '700', letterSpacing: 0.05, textTransform: 'uppercase', color: colors.onPrimaryContainer, marginTop: 2 }}>Favorites</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => onNavigate?.('profile')} activeOpacity={0.7} style={{ alignItems: 'center', justifyContent: 'center', paddingHorizontal: 16, paddingVertical: 8 }}>
-          <MaterialIcons name="person" size={22} color={colors.onSurfaceVariant} />
-          <Text style={{ fontSize: 12, lineHeight: 16, fontWeight: '700', letterSpacing: 0.05, textTransform: 'uppercase', color: colors.onSurfaceVariant, marginTop: 2 }}>Profile</Text>
+        <View style={{ alignItems: 'center', justifyContent: 'center', gap: 2 }}>
+          <View style={{ width: 44, height: 32, borderRadius: 10, backgroundColor: colors.primaryContainer, alignItems: 'center', justifyContent: 'center' }}>
+            <MaterialIcons name="favorite" size={22} color={colors.onPrimaryContainer} />
+          </View>
+          <Text style={{ fontSize: 11, lineHeight: 14, fontWeight: '600', color: colors.primary }}>Favorites</Text>
+        </View>
+        <TouchableOpacity onPress={() => onNavigate?.('profile')} activeOpacity={0.6} style={{ alignItems: 'center', justifyContent: 'center', gap: 2, paddingVertical: 4 }}>
+          <View style={{ width: 44, height: 32, borderRadius: 10, alignItems: 'center', justifyContent: 'center' }}>
+            <MaterialIcons name="person" size={22} color={colors.onSurfaceVariant} />
+          </View>
+          <Text style={{ fontSize: 11, lineHeight: 14, fontWeight: '600', color: colors.onSurfaceVariant }}>Profile</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
