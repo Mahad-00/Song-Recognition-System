@@ -18,6 +18,7 @@ const { width } = Dimensions.get('window');
 
 interface Props {
   fullName: string;
+  onListen?: () => void;
 }
 
 export default function HomeScreen({ fullName }: Props) {
@@ -123,6 +124,7 @@ export default function HomeScreen({ fullName }: Props) {
                 }}
               />
               <TouchableOpacity
+                onPress={onListen}
                 activeOpacity={0.7}
                 style={{
                   width: 160,
@@ -226,14 +228,18 @@ export default function HomeScreen({ fullName }: Props) {
           <MaterialIcons name="home" size={22} color={colors.onPrimaryContainer} />
           <Text style={{ fontSize: 12, lineHeight: 16, fontWeight: '700', letterSpacing: 0.05, textTransform: 'uppercase', color: colors.onPrimaryContainer, marginTop: 2 }}>Home</Text>
         </View>
-        {['History', 'Favorites', 'Profile'].map((tab) => (
-          <TouchableOpacity key={tab} activeOpacity={0.7} style={{ alignItems: 'center', justifyContent: 'center', paddingHorizontal: 16, paddingVertical: 8 }}>
+        {[
+          { label: 'History', icon: 'history' as const },
+          { label: 'Favorites', icon: 'favorite' as const },
+          { label: 'Profile', icon: 'person' as const },
+        ].map((tab) => (
+          <TouchableOpacity key={tab.label} activeOpacity={0.7} style={{ alignItems: 'center', justifyContent: 'center', paddingHorizontal: 16, paddingVertical: 8 }}>
             <MaterialIcons
-              name={tab.toLowerCase() === 'favorites' ? 'favorite' : tab.toLowerCase() as any}
+              name={tab.icon}
               size={22}
               color={colors.onSurfaceVariant}
             />
-            <Text style={{ fontSize: 12, lineHeight: 16, fontWeight: '700', letterSpacing: 0.05, textTransform: 'uppercase', color: colors.onSurfaceVariant, marginTop: 2 }}>{tab}</Text>
+            <Text style={{ fontSize: 12, lineHeight: 16, fontWeight: '700', letterSpacing: 0.05, textTransform: 'uppercase', color: colors.onSurfaceVariant, marginTop: 2 }}>{tab.label}</Text>
           </TouchableOpacity>
         ))}
       </View>

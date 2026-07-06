@@ -6,6 +6,7 @@ import OnboardingStep3 from '../screens/OnboardingStep3';
 import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import HomeScreen from '../screens/HomeScreen';
+import ListeningScreen from '../screens/ListeningScreen';
 
 export type Screen =
   | 'splash'
@@ -14,7 +15,8 @@ export type Screen =
   | 'onboarding3'
   | 'login'
   | 'signup'
-  | 'home';
+  | 'home'
+  | 'listening';
 
 export default function AppNavigator() {
   const [screen, setScreen] = useState<Screen>('splash');
@@ -46,17 +48,10 @@ export default function AppNavigator() {
       );
     case 'signup':
       return <SignUpScreen onSignIn={() => navigate('login')} />;
-    case 'signup':
-      return (
-        <SignUpScreen
-          onSignIn={(name) => {
-            setUserName(name);
-            navigate('login');
-          }}
-        />
-      );
     case 'home':
-      return <HomeScreen fullName={userName} />;
+      return <HomeScreen fullName={userName} onListen={() => navigate('listening')} />;
+    case 'listening':
+      return <ListeningScreen onCancel={() => navigate('home')} />;
     default:
       return <SplashScreen onGetStarted={() => navigate('onboarding1')} />;
   }
