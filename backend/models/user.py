@@ -37,6 +37,11 @@ class SignupRequest(BaseModel):
         return v
 
 
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
+
 class UserOut(BaseModel):
     id: str
     full_name: str

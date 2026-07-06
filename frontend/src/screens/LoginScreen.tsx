@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,22 +8,78 @@ import {
   SafeAreaView,
   StatusBar,
   ScrollView,
+  Animated,
+  ActivityIndicator,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../styles/splashStyles';
 import { loginStyles as s } from '../styles/loginStyles';
 import GoogleSignInButton from '../components/GoogleSignInButton';
+import { API_BASE_URL } from '../config/api';
 
 interface Props {
   onSignUp?: () => void;
+  onLogin?: (name: string) => void;
 }
 
-export default function LoginScreen({ onSignUp }: Props) {
+export default function LoginScreen({ onSignUp, onLogin }: Props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [remember, setRemember] = useState(false);
   const [focusedField, setFocusedField] = useState<'email' | 'password' | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+
+  const errorOpacity = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (errorMsg) {
+      Animated.timing(errorOpacity, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: false,
+      }).start();
+      const timer = setTimeout(() => {
+        Animated.timing(errorOpacity, {
+          toValue: 0,
+          duration: 300,
+          useNativeDriver: false,
+        }).start(() => setErrorMsg(''));
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [errorMsg]);
+
+  const handleLogin = async () => {
+    if (!email.trim() || !email.includes('@')) {
+      setErrorMsg('Please enter a valid email');
+      return;
+    }
+    if (!password) {
+      setErrorMsg('Please enter your password');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await fetch(`${API_BASE_URL}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim().toLowerCase(), password }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        onLogin?.(data.full_name);
+      } else {
+        setErrorMsg(data.detail || 'Login failed');
+      }
+    } catch {
+      setErrorMsg('Could not connect to the server');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <SafeAreaView style={s.safeArea}>
@@ -134,9 +190,26 @@ export default function LoginScreen({ onSignUp }: Props) {
               <Text style={s.checkboxLabel}>Remember me for 30 days</Text>
             </TouchableOpacity>
 
+            {/* Error Message */}
+            {errorMsg !== '' && (
+              <Animated.View style={{ opacity: errorOpacity, backgroundColor: '#e74c3c', borderRadius: 8, padding: 10, marginBottom: 12, flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                <MaterialIcons name="error-outline" size={18} color="#fff" />
+                <Text style={{ color: '#fff', fontWeight: '600', fontSize: 13, flex: 1 }}>{errorMsg}</Text>
+              </Animated.View>
+            )}
+
             {/* Login Button */}
-            <TouchableOpacity style={s.loginButton} activeOpacity={0.9}>
-              <Text style={s.loginButtonText}>Login</Text>
+            <TouchableOpacity
+              style={[s.loginButton, loading && { opacity: 0.7 }]}
+              activeOpacity={0.9}
+              onPress={handleLogin}
+              disabled={loading}
+            >
+              {loading ? (
+                <ActivityIndicator color={colors.onPrimaryContainer} size="small" />
+              ) : (
+                <Text style={s.loginButtonText}>Login</Text>
+              )}
             </TouchableOpacity>
 
             {/* Divider */}

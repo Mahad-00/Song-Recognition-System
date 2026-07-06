@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 from fastapi import APIRouter, HTTPException
 import bcrypt as _bcrypt
 from config.db import users_collection
-from models.user import SignupRequest, UserOut
+from models.user import SignupRequest, LoginRequest, UserOut
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -31,4 +31,21 @@ async def signup(body: SignupRequest):
         full_name=created["full_name"],
         email=created["email"],
         created_at=created["created_at"],
+    )
+
+
+@router.post("/login", response_model=UserOut)
+async def login(body: LoginRequest):
+    user = users_collection.find_one({"email": body.email.strip().lower()})
+    if not user:
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+
+    if not _bcrypt.checkpw(body.password.encode("utf-8"), user["hashed_password"].encode("utf-8")):
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+
+    return UserOut(
+        id=str(user["_id"]),
+        full_name=user["full_name"],
+        email=user["email"],
+        created_at=user["created_at"],
     )
