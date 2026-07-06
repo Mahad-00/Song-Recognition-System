@@ -54,7 +54,7 @@ export default function HomeScreen({ fullName, onListen, onNavigate }: Props) {
         contentContainerStyle={{ paddingBottom: 120 }}
       >
         {/* Header */}
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20, height: 64, marginTop: 24 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20, height: 64, marginTop: 12 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
             <Image
               source={require('../images/logo.png')}
