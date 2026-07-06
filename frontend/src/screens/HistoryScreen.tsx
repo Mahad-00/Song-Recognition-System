@@ -52,16 +52,9 @@ export default function HistoryScreen({ onNavigate }: Props) {
       <StatusBar barStyle="dark-content" backgroundColor={colors.background} />
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 120 }}>
         {/* Header */}
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20, height: 64 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-            <Text style={{ fontSize: 24, lineHeight: 32, fontWeight: '700', color: colors.primary }}>EchoID</Text>
-          </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 16 }}>
-            <TouchableOpacity activeOpacity={0.7}>
-              <MaterialIcons name="search" size={24} color={colors.primary} />
-            </TouchableOpacity>
-            <View style={{ width: 32, height: 32, borderRadius: 16, backgroundColor: colors.surfaceContainerHigh, overflow: 'hidden' }} />
-          </View>
+        <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, height: 64 }}>
+          <Image source={require('../images/screen.png')} style={{ width: 36, height: 36 }} resizeMode="contain" />
+          <Text style={{ fontSize: 24, lineHeight: 32, fontWeight: '700', color: colors.primary, marginLeft: 8 }}>EchoID</Text>
         </View>
 
         <View style={{ paddingHorizontal: 20 }}>

@@ -2,6 +2,7 @@ import React from 'react';
 import {
   View,
   Text,
+  Image,
   TouchableOpacity,
   SafeAreaView,
   StatusBar,
@@ -22,18 +23,12 @@ export default function ProfileScreen({ userName, onNavigate, onLogout }: Props)
       <StatusBar barStyle="dark-content" backgroundColor={colors.background} />
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 120 }}>
         {/* Header */}
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 20, height: 64 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-            <TouchableOpacity onPress={() => onNavigate?.('home')} activeOpacity={0.7}>
-              <MaterialIcons name="search" size={24} color={colors.primary} />
-            </TouchableOpacity>
-          </View>
-          <Text style={{ fontSize: 24, lineHeight: 32, fontWeight: '700', color: colors.primary }}>EchoID</Text>
-          <View style={{ width: 32, height: 32, borderRadius: 16, overflow: 'hidden', borderWidth: 1, borderColor: colors.outlineVariant + '4D' }}>
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.surfaceContainerHighest }}>
-              <MaterialIcons name="person" size={18} color={colors.onSurfaceVariant} />
-            </View>
-          </View>
+        <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, height: 64 }}>
+          <TouchableOpacity onPress={() => onNavigate?.('home')} activeOpacity={0.7} style={{ marginRight: 8 }}>
+            <MaterialIcons name="arrow-back" size={24} color={colors.primary} />
+          </TouchableOpacity>
+          <Image source={require('../images/screen.png')} style={{ width: 36, height: 36 }} resizeMode="contain" />
+          <Text style={{ fontSize: 24, lineHeight: 32, fontWeight: '700', color: colors.primary, marginLeft: 8 }}>EchoID</Text>
         </View>
 
         <View style={{ paddingHorizontal: 20, paddingTop: 24 }}>
