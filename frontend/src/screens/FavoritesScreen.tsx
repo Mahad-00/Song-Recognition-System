@@ -36,12 +36,11 @@ export default function FavoritesScreen({ onNavigate }: Props) {
       <StatusBar barStyle="dark-content" backgroundColor={colors.background} />
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 120 }}>
         {/* Header */}
-        <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, height: 64 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, height: 64, marginTop: 12 }}>
           <TouchableOpacity onPress={() => onNavigate?.('home')} activeOpacity={0.7} style={{ marginRight: 8 }}>
             <MaterialIcons name="arrow-back" size={24} color={colors.primary} />
           </TouchableOpacity>
-          <Image source={require('../images/screen.png')} style={{ width: 36, height: 36 }} resizeMode="contain" />
-          <Text style={{ fontSize: 24, lineHeight: 32, fontWeight: '700', color: colors.primary, marginLeft: 8 }}>EchoID</Text>
+          <Image source={require('../images/screen.png')} style={{ width: 40, height: 40 }} resizeMode="contain" />
         </View>
 
         <View style={{ paddingHorizontal: 20 }}>
