@@ -19,9 +19,10 @@ const { width } = Dimensions.get('window');
 interface Props {
   fullName: string;
   onListen?: () => void;
+  onNavigate?: (screen: 'favorites' | 'history' | 'profile') => void;
 }
 
-export default function HomeScreen({ fullName, onListen }: Props) {
+export default function HomeScreen({ fullName, onListen, onNavigate }: Props) {
   const pulseAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
@@ -223,23 +224,28 @@ export default function HomeScreen({ fullName, onListen }: Props) {
       </ScrollView>
 
       {/* Bottom Navigation */}
-      <View style={{ position: 'absolute', bottom: 24, left: '5%', width: '90%', maxWidth: 440, alignSelf: 'center', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', paddingVertical: 8, paddingHorizontal: 16, backgroundColor: colors.surface + 'CC', borderWidth: 1, borderColor: colors.outlineVariant + '4D', borderRadius: 999, shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.08, shadowRadius: 16, elevation: 8 }}>
-        <View style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: colors.primaryContainer, borderRadius: 999, paddingHorizontal: 16, paddingVertical: 8 }}>
-          <MaterialIcons name="home" size={22} color={colors.onPrimaryContainer} />
-          <Text style={{ fontSize: 12, lineHeight: 16, fontWeight: '700', letterSpacing: 0.05, textTransform: 'uppercase', color: colors.onPrimaryContainer, marginTop: 2 }}>Home</Text>
+      <View style={{ position: 'absolute', bottom: 24, left: 20, right: 20, maxWidth: 440, alignSelf: 'center', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', height: 72, backgroundColor: colors.surfaceContainerLowest, borderWidth: 1, borderColor: colors.outlineVariant + '4D', borderRadius: 20, shadowColor: '#000', shadowOffset: { width: 0, height: 8 }, shadowOpacity: 0.06, shadowRadius: 24, elevation: 8 }}>
+        <View style={{ alignItems: 'center', justifyContent: 'center', gap: 2 }}>
+          <View style={{ width: 44, height: 32, borderRadius: 10, backgroundColor: colors.primaryContainer, alignItems: 'center', justifyContent: 'center' }}>
+            <MaterialIcons name="home" size={22} color={colors.onPrimaryContainer} />
+          </View>
+          <Text style={{ fontSize: 11, lineHeight: 14, fontWeight: '600', color: colors.primary }}>Home</Text>
         </View>
         {[
-          { label: 'History', icon: 'history' as const },
-          { label: 'Favorites', icon: 'favorite' as const },
-          { label: 'Profile', icon: 'person' as const },
+          { label: 'History', icon: 'history' as const, key: 'history' as const },
+          { label: 'Favorites', icon: 'favorite' as const, key: 'favorites' as const },
+          { label: 'Profile', icon: 'person' as const, key: 'profile' as const },
         ].map((tab) => (
-          <TouchableOpacity key={tab.label} activeOpacity={0.7} style={{ alignItems: 'center', justifyContent: 'center', paddingHorizontal: 16, paddingVertical: 8 }}>
-            <MaterialIcons
-              name={tab.icon}
-              size={22}
-              color={colors.onSurfaceVariant}
-            />
-            <Text style={{ fontSize: 12, lineHeight: 16, fontWeight: '700', letterSpacing: 0.05, textTransform: 'uppercase', color: colors.onSurfaceVariant, marginTop: 2 }}>{tab.label}</Text>
+          <TouchableOpacity
+            key={tab.key}
+            activeOpacity={0.6}
+            onPress={() => onNavigate?.(tab.key)}
+            style={{ alignItems: 'center', justifyContent: 'center', gap: 2, paddingVertical: 4 }}
+          >
+            <View style={{ width: 44, height: 32, borderRadius: 10, alignItems: 'center', justifyContent: 'center' }}>
+              <MaterialIcons name={tab.icon} size={22} color={colors.onSurfaceVariant} />
+            </View>
+            <Text style={{ fontSize: 11, lineHeight: 14, fontWeight: '600', color: colors.onSurfaceVariant }}>{tab.label}</Text>
           </TouchableOpacity>
         ))}
       </View>

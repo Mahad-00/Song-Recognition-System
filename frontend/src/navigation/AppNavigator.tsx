@@ -7,6 +7,9 @@ import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import HomeScreen from '../screens/HomeScreen';
 import ListeningScreen from '../screens/ListeningScreen';
+import FavoritesScreen from '../screens/FavoritesScreen';
+import HistoryScreen from '../screens/HistoryScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 
 export type Screen =
   | 'splash'
@@ -16,7 +19,10 @@ export type Screen =
   | 'login'
   | 'signup'
   | 'home'
-  | 'listening';
+  | 'listening'
+  | 'favorites'
+  | 'history'
+  | 'profile';
 
 export default function AppNavigator() {
   const [screen, setScreen] = useState<Screen>('splash');
@@ -49,9 +55,21 @@ export default function AppNavigator() {
     case 'signup':
       return <SignUpScreen onSignIn={() => navigate('login')} />;
     case 'home':
-      return <HomeScreen fullName={userName} onListen={() => navigate('listening')} />;
+      return (
+        <HomeScreen
+          fullName={userName}
+          onListen={() => navigate('listening')}
+          onNavigate={(tab) => navigate(tab)}
+        />
+      );
     case 'listening':
       return <ListeningScreen onCancel={() => navigate('home')} />;
+    case 'favorites':
+      return <FavoritesScreen />;
+    case 'history':
+      return <HistoryScreen />;
+    case 'profile':
+      return <ProfileScreen />;
     default:
       return <SplashScreen onGetStarted={() => navigate('onboarding1')} />;
   }
