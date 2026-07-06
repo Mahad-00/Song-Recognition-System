@@ -14,7 +14,7 @@ export const signupStyles = StyleSheet.create({
   },
   logoSection: {
     alignItems: 'center',
-    marginBottom: 0,
+    marginBottom: 20,
   },
   logo: {
     width: 140,
