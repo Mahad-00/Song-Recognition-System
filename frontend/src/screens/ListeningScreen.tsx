@@ -11,19 +11,20 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { Audio } from 'expo-av';
-import * as FileSystem from 'expo-file-system';
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../styles/splashStyles';
 import { API_BASE_URL } from '../config/api';
 
 interface Props {
+  userEmail?: string;
   onCancel?: () => void;
 }
 
-export default function ListeningScreen({ onCancel }: Props) {
+export default function ListeningScreen({ userEmail, onCancel }: Props) {
   const recordingRef = useRef<Audio.Recording | null>(null);
   const [status, setStatus] = useState<'idle' | 'recording' | 'processing' | 'result'>('idle');
   const [result, setResult] = useState<any>(null);
+  const [isFavorite, setIsFavorite] = useState(false);
   const [error, setError] = useState('');
   const barAnim = useRef(new Animated.Value(0)).current;
 
@@ -114,7 +115,9 @@ export default function ListeningScreen({ onCancel }: Props) {
           });
 
           const data = await res.json();
-          if (data.match) {
+          if (!res.ok) {
+            setError(data.detail || data.message || 'Server error');
+          } else if (data.match) {
             setResult(data.match);
             setStatus('result');
             return;
@@ -157,12 +160,37 @@ export default function ListeningScreen({ onCancel }: Props) {
               <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: colors.primary }} />
               <Text style={{ fontSize: 14, lineHeight: 20, fontWeight: '700', color: colors.primary }}>{result.confidence}% match</Text>
             </View>
+            <TouchableOpacity
+              onPress={async () => {
+                if (!userEmail) return;
+                try {
+                  const res = await fetch(`${API_BASE_URL}/favorites/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      user_email: userEmail,
+                      title: result.title,
+                      artist: result.artist,
+                      album: result.album || '',
+                      genre: result.genre || '',
+                      confidence: result.confidence,
+                    }),
+                  });
+                  if (res.ok) setIsFavorite(true);
+                } catch {}
+              }}
+              activeOpacity={0.7}
+              style={{ marginTop: 16, flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 20, paddingVertical: 10, borderRadius: 999, borderWidth: 1, borderColor: isFavorite ? colors.error : colors.outlineVariant + '4D' }}
+            >
+              <MaterialIcons name={isFavorite ? 'favorite' : 'favorite-border'} size={20} color={isFavorite ? colors.error : colors.onSurfaceVariant} />
+              <Text style={{ fontSize: 14, lineHeight: 20, fontWeight: '600', color: isFavorite ? colors.error : colors.onSurfaceVariant }}>{isFavorite ? 'Saved' : 'Add to Favorites'}</Text>
+            </TouchableOpacity>
           </View>
         ) : (
           <>
             <View style={{ backgroundColor: colors.surfaceContainerLowest, borderRadius: 32, padding: 24, borderWidth: 1, borderColor: colors.outlineVariant + '4D', shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.04, shadowRadius: 20, elevation: 4 }}>
               <Image
-                source={require('../images/mic.png')}
+                source={require('../../assets/images/mic.png')}
                 style={{ width: 256, height: 256, tintColor: status === 'recording' ? colors.error : colors.primary }}
                 resizeMode="contain"
               />

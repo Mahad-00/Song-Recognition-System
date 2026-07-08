@@ -162,7 +162,7 @@ export default function SignUpScreen({ onSignIn }: Props) {
             {/* Logo Branding */}
             <View style={s.logoSection}>
               <Image
-                source={require('../images/screen.png')}
+                source={require('../../assets/images/screen.png')}
                 style={s.logo}
                 resizeMode="contain"
               />

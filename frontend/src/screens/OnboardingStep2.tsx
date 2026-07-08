@@ -37,7 +37,7 @@ export default function OnboardingStep2({ onNext, onBack }: Props) {
             <MaterialIcons name="arrow-back" size={24} color={colors.primary} />
           </TouchableOpacity>
           <Image
-            source={require('../images/logo.png')}
+            source={require('../../assets/images/logo.png')}
             style={{ height: 32, width: 32, resizeMode: 'contain' }}
           />
         </View>

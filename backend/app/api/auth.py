@@ -1,8 +1,8 @@
 from datetime import datetime, timezone
 from fastapi import APIRouter, HTTPException
 import bcrypt as _bcrypt
-from config.db import users_collection
-from models.user import SignupRequest, LoginRequest, UserOut
+from app.core.db import users_collection
+from app.models.user import SignupRequest, LoginRequest, UserOut
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 

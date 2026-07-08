@@ -30,6 +30,7 @@ export type TabScreen = (typeof tabScreens)[number];
 export default function AppNavigator() {
   const [screen, setScreen] = useState<Screen>('splash');
   const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
 
   const navigate = (s: Screen) => setScreen(s);
   const onTab = (tab: TabScreen) => setScreen(tab);
@@ -50,8 +51,9 @@ export default function AppNavigator() {
       return (
         <LoginScreen
           onSignUp={() => navigate('signup')}
-          onLogin={(name) => {
+          onLogin={(name, email) => {
             setUserName(name);
+            setUserEmail(email);
             navigate('home');
           }}
         />
@@ -62,20 +64,22 @@ export default function AppNavigator() {
       return (
         <HomeScreen
           fullName={userName}
+          userEmail={userEmail}
           onListen={() => navigate('listening')}
           onNavigate={onTab}
         />
       );
     case 'listening':
-      return <ListeningScreen onCancel={() => navigate('home')} />;
+      return <ListeningScreen userEmail={userEmail} onCancel={() => navigate('home')} />;
     case 'favorites':
-      return <FavoritesScreen onNavigate={onTab} />;
+      return <FavoritesScreen userEmail={userEmail} onNavigate={onTab} />;
     case 'history':
       return <HistoryScreen onNavigate={onTab} />;
     case 'profile':
       return (
         <ProfileScreen
           userName={userName}
+          userEmail={userEmail}
           onNavigate={onTab}
           onLogout={() => navigate('login')}
         />

@@ -65,7 +65,7 @@ export default function SplashScreen({ onGetStarted }: Props) {
         {/* Top Section: Branding */}
         <View style={styles.topSection}>
           <Image
-            source={require('../images/screen.png')}
+            source={require('../../assets/images/screen.png')}
             style={styles.logo}
             resizeMode="contain"
           />

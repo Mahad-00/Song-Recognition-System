@@ -13,6 +13,7 @@ import { colors } from '../styles/splashStyles';
 
 interface Props {
   userName: string;
+  userEmail?: string;
   onNavigate?: (screen: 'home' | 'favorites' | 'history' | 'profile') => void;
   onLogout?: () => void;
 }
@@ -27,7 +28,7 @@ export default function ProfileScreen({ userName, onNavigate, onLogout }: Props)
           <TouchableOpacity onPress={() => onNavigate?.('home')} activeOpacity={0.7} style={{ marginRight: 8 }}>
             <MaterialIcons name="arrow-back" size={24} color={colors.primary} />
           </TouchableOpacity>
-          <Image source={require('../images/logo.png')} style={{ width: 32, height: 32 }} resizeMode="contain" />
+          <Image source={require('../../assets/images/logo.png')} style={{ width: 32, height: 32 }} resizeMode="contain" />
         </View>
 
         <View style={{ paddingHorizontal: 20, paddingTop: 24 }}>

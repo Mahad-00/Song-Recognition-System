@@ -32,7 +32,7 @@ export default function OnboardingStep1({ onNext }: Props) {
         }}
       >
         <Image
-          source={require('../images/logo.png')}
+          source={require('../../assets/images/logo.png')}
           style={{ height: 32, width: 32, resizeMode: 'contain' }}
         />
         <View />

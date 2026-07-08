@@ -2,6 +2,7 @@ from pydantic import BaseModel, field_validator
 from datetime import datetime, timezone
 from typing import Optional
 
+
 class SignupRequest(BaseModel):
     full_name: str
     email: str

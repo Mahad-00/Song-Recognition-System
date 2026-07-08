@@ -19,7 +19,7 @@ import { API_BASE_URL } from '../config/api';
 
 interface Props {
   onSignUp?: () => void;
-  onLogin?: (name: string) => void;
+  onLogin?: (name: string, email: string) => void;
 }
 
 export default function LoginScreen({ onSignUp, onLogin }: Props) {
@@ -83,7 +83,7 @@ export default function LoginScreen({ onSignUp, onLogin }: Props) {
       const data = await res.json();
       if (res.ok) {
         setSuccessMsg('Signed in successfully!');
-        setTimeout(() => onLogin?.(data.full_name), 1500);
+        setTimeout(() => onLogin?.(data.full_name, data.email), 1500);
       } else {
         setErrorMsg(data.detail || 'Login failed');
       }
@@ -116,7 +116,7 @@ export default function LoginScreen({ onSignUp, onLogin }: Props) {
           {/* Logo Section */}
           <View style={s.logoSection}>
             <Image
-              source={require('../images/screen.png')}
+              source={require('../../assets/images/screen.png')}
               style={s.logo}
               resizeMode="contain"
             />
