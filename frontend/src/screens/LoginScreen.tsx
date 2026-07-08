@@ -30,8 +30,10 @@ export default function LoginScreen({ onSignUp, onLogin }: Props) {
   const [focusedField, setFocusedField] = useState<'email' | 'password' | null>(null);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
 
   const errorOpacity = useRef(new Animated.Value(0)).current;
+  const successOpacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     if (errorMsg) {
@@ -50,6 +52,16 @@ export default function LoginScreen({ onSignUp, onLogin }: Props) {
       return () => clearTimeout(timer);
     }
   }, [errorMsg]);
+
+  useEffect(() => {
+    if (successMsg) {
+      Animated.timing(successOpacity, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: false,
+      }).start();
+    }
+  }, [successMsg]);
 
   const handleLogin = async () => {
     if (!email.trim() || !email.includes('@')) {
@@ -70,7 +82,8 @@ export default function LoginScreen({ onSignUp, onLogin }: Props) {
       });
       const data = await res.json();
       if (res.ok) {
-        onLogin?.(data.full_name);
+        setSuccessMsg('Signed in successfully!');
+        setTimeout(() => onLogin?.(data.full_name), 1500);
       } else {
         setErrorMsg(data.detail || 'Login failed');
       }
@@ -84,6 +97,17 @@ export default function LoginScreen({ onSignUp, onLogin }: Props) {
   return (
     <SafeAreaView style={s.safeArea}>
       <StatusBar barStyle="dark-content" backgroundColor={colors.background} />
+      {successMsg !== '' ? (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 20 }}>
+          <Animated.View style={{ opacity: successOpacity, backgroundColor: colors.surfaceContainerLowest, borderRadius: 16, padding: 32, width: '100%', maxWidth: 280, alignItems: 'center', borderWidth: 1, borderColor: colors.primary + '33', shadowColor: '#000', shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.08, shadowRadius: 30, elevation: 6 }}>
+            <View style={{ width: 64, height: 64, borderRadius: 32, backgroundColor: colors.primaryContainer, alignItems: 'center', justifyContent: 'center', marginBottom: 16 }}>
+              <MaterialIcons name="check" size={34} color="#fff" />
+            </View>
+            <Text style={{ color: colors.onSurface, fontWeight: '700', fontSize: 20, textAlign: 'center' }}>{successMsg}</Text>
+            <Text style={{ color: colors.onSurfaceVariant, fontWeight: '500', fontSize: 14, textAlign: 'center', marginTop: 8 }}>Redirecting to home...</Text>
+          </Animated.View>
+        </View>
+      ) : (
       <ScrollView
         contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
         showsVerticalScrollIndicator={false}
@@ -232,6 +256,7 @@ export default function LoginScreen({ onSignUp, onLogin }: Props) {
           </View>
         </View>
       </ScrollView>
+      )}
     </SafeAreaView>
   );
 }
