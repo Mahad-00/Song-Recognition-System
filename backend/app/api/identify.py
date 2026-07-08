@@ -38,7 +38,7 @@ async def identify(audio: UploadFile = File(...)):
         try:
             wav_path = tmp_path + "_converted.wav"
             convert_to_wav(tmp_path, wav_path)
-            audio_data, sr = librosa.load(wav_path, sr=None, mono=True)
+            audio_data, sr = librosa.load(wav_path, sr=22050, mono=True)
             os.unlink(wav_path)
         finally:
             os.unlink(tmp_path)

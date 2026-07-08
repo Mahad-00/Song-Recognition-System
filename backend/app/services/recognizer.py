@@ -59,18 +59,20 @@ class SongMatcher:
         if f.ndim == 1:
             f = f.reshape(1, -1)
 
-        q_l2 = f / np.linalg.norm(f, axis=1, keepdims=True).clip(min=1e-10)
+        # Process query identically to load_all() so vectors live in same space:
+        #   1. average raw frames (matches avg = mean(windows))
+        #   2. L2-normalize the average  (matches avg_l2 = avg / norm(avg))
+        #   3. center + normalize        (matches avg_corr = center(avg_l2) / norm(...))
+        q_avg = f.mean(axis=0)
+        n1 = np.linalg.norm(q_avg)
+        q_l2 = q_avg / n1 if n1 > 1e-12 else q_avg
 
-        c = f - f.mean(axis=1, keepdims=True)
-        q_corr = c / np.linalg.norm(c, axis=1, keepdims=True).clip(min=1e-10)
+        q_ac = q_l2 - q_l2.mean()
+        n2 = np.linalg.norm(q_ac)
+        q_corr = q_ac / n2 if n2 > 1e-12 else q_ac
 
-        q_avg = q_l2.mean(axis=0)
-        q_avg /= np.linalg.norm(q_avg).clip(min=1e-10)
-        q_avg_c = q_avg - q_avg.mean()
-        q_avg_c /= np.linalg.norm(q_avg_c).clip(min=1e-10)
-
-        scores_l2 = np.dot(self.avg_l2, q_avg)
-        scores_corr = np.dot(self.avg_corr, q_avg_c)
+        scores_l2 = np.dot(self.avg_l2, q_l2)
+        scores_corr = np.dot(self.avg_corr, q_corr)
         scores = scores_l2 * 0.5 + scores_corr * 0.5
 
         top_idx = np.argpartition(scores, -top_n)[-top_n:]
